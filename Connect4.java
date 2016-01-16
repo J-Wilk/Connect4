@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Connect4{
     private Board gameBoard;
     private int goNumber;
@@ -5,9 +7,12 @@ class Connect4{
     public Connect4(){
         gameBoard = new Board();
         goNumber = 0;
+        Scanner reader = new Scanner(System.in);
         while(gameBoard.noWinner()){
-            // get input
-            Move moveToMake = new Move(5,0);
+            gameBoard.displayBoard();
+            System.out.println("Enter the column you would like to play your go in: ");
+            int movePosition = reader.nextInt();
+            Move moveToMake = new Move(movePosition);
             moveToMake.setMoveColor(getCurrentPlayerColor());
             gameBoard.makeMove(moveToMake);
             gameBoard.displayBoard();

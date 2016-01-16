@@ -72,8 +72,9 @@ public class Board{
     private int findFirstEmptySlot(Move moveToFindEmptySlotFor){
         boolean spaceFound = false;
         int currentRowSlot = rowLength - 1;
-        while(!spaceFound){
-            if(boardRepresentation[moveToValidate.getColPosition()][currentRowSlot] != BoardSlot.EMPTY){
+        while(!spaceFound && currentRowSlot > 0){
+            System.out.println(moveToFindEmptySlotFor.getColPosition() + " "  + currentRowSlot);
+            if(boardRepresentation[moveToFindEmptySlotFor.getColPosition()][currentRowSlot] != BoardSlot.EMPTY){
                 spaceFound = true;  
             } else { 
                 currentRowSlot--;
