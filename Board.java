@@ -28,6 +28,7 @@ public class Board{
             }
             System.out.println("|");
         }
+        System.out.println();
     }
     
     public void printBoardSlot(int row, int column){
@@ -71,16 +72,16 @@ public class Board{
     
     private int findFirstEmptySlot(Move moveToFindEmptySlotFor){
         boolean spaceFound = false;
-        int currentRowSlot = rowLength - 1;
-        while(!spaceFound && currentRowSlot > 0){
-            System.out.println(moveToFindEmptySlotFor.getColPosition() + " "  + currentRowSlot);
-            if(boardRepresentation[moveToFindEmptySlotFor.getColPosition()][currentRowSlot] != BoardSlot.EMPTY){
+        int currentRowSlot = 0;
+        while(!spaceFound && currentRowSlot < rowLength){
+            if(boardRepresentation[moveToFindEmptySlotFor.getColPosition()][currentRowSlot] == BoardSlot.EMPTY){
+                System.out.println("In");
                 spaceFound = true;  
             } else { 
-                currentRowSlot--;
+                currentRowSlot++;
             }
         }
-        return currentRowSlot++;
+        return currentRowSlot;
     }
 
 }
