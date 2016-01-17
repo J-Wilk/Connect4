@@ -47,7 +47,7 @@ public class Board{
     
     public void makeMove(Move moveToPlay){
         if(validMove(moveToPlay)){
-            boardRepresentation[moveToPlay.getColPosition()][findFirstEmptySlot(moveToPlay)] = moveToPlay.getMoveColor();
+            boardRepresentation[findFirstEmptySlot(moveToPlay)][moveToPlay.getColPosition()] = moveToPlay.getMoveColor();
         }
     }
     
@@ -62,23 +62,24 @@ public class Board{
     
     private boolean moveInBoard(Move moveToValidate){
         int colPos = moveToValidate.getColPosition(); 
-        return (colPos >= 0 && colPos < columnLength);
+        return colPos >= 0 && colPos < columnLength;
     }
     
     private boolean moveIsEmpty(Move moveToValidate){
-        int topSlotInBoard = rowLength - 1;
-        return boardRepresentation[moveToValidate.getColPosition()][topSlotInBoard] == BoardSlot.EMPTY;
+        int topSlotInBoard = 0;
+        System.out.println(topSlotInBoard + " " + moveToValidate.getColPosition());
+        return boardRepresentation[topSlotInBoard][moveToValidate.getColPosition()] == BoardSlot.EMPTY;
     }
     
     private int findFirstEmptySlot(Move moveToFindEmptySlotFor){
         boolean spaceFound = false;
-        int currentRowSlot = 0;
-        while(!spaceFound && currentRowSlot < rowLength){
-            if(boardRepresentation[moveToFindEmptySlotFor.getColPosition()][currentRowSlot] == BoardSlot.EMPTY){
+        int currentRowSlot = columnLength - 1;
+        while(!spaceFound && currentRowSlot > 0){
+            if(boardRepresentation[currentRowSlot][moveToFindEmptySlotFor.getColPosition()] == BoardSlot.EMPTY){
                 System.out.println("In");
                 spaceFound = true;  
             } else { 
-                currentRowSlot++;
+                currentRowSlot--;
             }
         }
         return currentRowSlot;

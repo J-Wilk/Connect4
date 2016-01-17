@@ -15,7 +15,6 @@ class Connect4{
             Move moveToMake = new Move(movePosition);
             moveToMake.setMoveColor(getCurrentPlayerColor());
             gameBoard.makeMove(moveToMake);
-            gameBoard.displayBoard();
             goNumber++;
         }
     
