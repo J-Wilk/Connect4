@@ -22,6 +22,7 @@ public class Board{
     }
     
     public void displayBoard(){
+        printNumbers();
         for(int i = 0; i < columnLength; i++){
             for(int j = 0; j < rowLength; j++){
                 printBoardSlot(i, j);
@@ -31,15 +32,18 @@ public class Board{
         System.out.println();
     }
     
+    private void printNumbers(){
+        for(int i = 1; i < rowLength + 1; i++){
+            System.out.print(" " + i);
+        }
+        System.out.println();
+    }
+    
     public void printBoardSlot(int row, int column){
         System.out.print("|" + boardRepresentation[row][column]);
     }
     
-    // check move
-    // make move
     // winning move
-    // change how playing a move works
-    
     
     public boolean noWinner(){
         return true;
@@ -62,7 +66,7 @@ public class Board{
     
     private boolean moveInBoard(Move moveToValidate){
         int colPos = moveToValidate.getColPosition(); 
-        return colPos >= 0 && colPos < columnLength;
+        return colPos >= 0 && colPos < rowLength + 1;
     }
     
     private boolean moveIsEmpty(Move moveToValidate){
