@@ -3,7 +3,7 @@ public class Move{
     private BoardSlot moveColor;
     
     public Move(int colToPlayMoveIn){
-        this.colToPlayMoveIn = colToPlayMoveIn;
+        this.colToPlayMoveIn = colToPlayMoveIn-1;
     }
 
     public void setMoveColor(BoardSlot moveColor){
