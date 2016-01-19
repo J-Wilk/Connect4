@@ -5,6 +5,8 @@ public class Board{
     private BoardSlot[][] boardRepresentation;
     private int rowLength;
     private int columnLength;
+    private int lastMoveColumn;
+    private int lastMoveRow;
     
     public Board(){
         rowLength = 7;
@@ -46,13 +48,36 @@ public class Board{
     // winning move
     
     public boolean noWinner(){
+        if(horizontalWin() || verticleWin() || diagonalWin()){
+            return false;
+        }
         return true;
+    }
+    
+    private boolean horizontalWin(){
+        return false;
+    }
+    
+    private boolean verticleWin(){
+        return false;
+    }
+    
+    private boolean diagonalWin(){
+        return false;
     }
     
     public void makeMove(Move moveToPlay){
         if(validMove(moveToPlay)){
-            boardRepresentation[findFirstEmptySlot(moveToPlay)][moveToPlay.getColPosition()] = moveToPlay.getMoveColor();
+            int firstEmptySlotInColumn = findFirstEmptySlot(moveToPlay)
+            int column = moveToPlay.getColPosition()
+            boardRepresentation[firstEmptySlotInColumn][column] = moveToPlay.getMoveColor();
+            assignPositionToLastMoveFields(firstEmptySlotInColumn, colum);
         }
+    }
+    
+    private void assignPositionToLastMoveFileds(int column, int row){
+        lastMoveColumn = column;
+        lastMoveRow = row;
     }
     
     private boolean validMove(Move moveToValidate){
