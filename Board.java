@@ -59,7 +59,6 @@ public class Board{
         int count = 0;
         int position = lastMoveRow;
         while(inColumnBoundary(position)){
-            System.out.println(boardRepresentation[lastMoveRow][position]);
             if(boardRepresentation[lastMoveColumn][position] == lastMoveColor)
             {
                 count++;
@@ -90,8 +89,6 @@ public class Board{
     }
     
     private boolean inColumnBoundary(int columnPosition){
-        System.out.println("col " + columnPosition);
-        System.out.println(columnPosition > -1 && columnPosition < rowLength-1);
         return columnPosition > -1 && columnPosition < rowLength-1;
     }
     
@@ -130,7 +127,6 @@ public class Board{
     
     private boolean moveIsEmpty(Move moveToValidate){
         int topSlotInBoard = 0;
-        System.out.println(topSlotInBoard + " " + moveToValidate.getColPosition());
         return boardRepresentation[topSlotInBoard][moveToValidate.getColPosition()] == BoardSlot.EMPTY;
     }
     
@@ -139,7 +135,6 @@ public class Board{
         int currentRowSlot = columnLength - 1;
         while(!spaceFound && currentRowSlot > 0){
             if(boardRepresentation[currentRowSlot][moveToFindEmptySlotFor.getColPosition()] == BoardSlot.EMPTY){
-                System.out.println("In");
                 spaceFound = true;  
             } else { 
                 currentRowSlot--;
