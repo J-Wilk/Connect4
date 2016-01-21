@@ -17,6 +17,8 @@ class Connect4{
             gameBoard.makeMove(moveToMake);
             goNumber++;
         }
+        gameBoard.displayBoard();
+        System.out.println("winner");
     
     }
     

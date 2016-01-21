@@ -7,6 +7,7 @@ public class Board{
     private int columnLength;
     private int lastMoveColumn;
     private int lastMoveRow;
+    private BoardSlot lastMoveColor;
     
     public Board(){
         rowLength = 7;
@@ -55,7 +56,29 @@ public class Board{
     }
     
     private boolean horizontalWin(){
-        return false;
+        int count = 0;
+        int position = lastMoveRow;
+        while(inColumnBoundary(position)){
+            System.out.println(boardRepresentation[lastMoveRow][position]);
+            if(boardRepresentation[lastMoveColumn][position] == lastMoveColor)
+            {
+                count++;
+            } else {
+                break;
+            }
+            position++;
+        }
+        position = lastMoveRow - 1;
+        while(inColumnBoundary(position)){
+            if(boardRepresentation[lastMoveColumn][position] == lastMoveColor)
+            {
+                count++;
+            } else {
+                break;
+            }
+            position--;
+        }
+        return count >= 4;
     }
     
     private boolean verticleWin(){
@@ -66,18 +89,29 @@ public class Board{
         return false;
     }
     
+    private boolean inColumnBoundary(int columnPosition){
+        System.out.println("col " + columnPosition);
+        System.out.println(columnPosition > -1 && columnPosition < rowLength-1);
+        return columnPosition > -1 && columnPosition < rowLength-1;
+    }
+    
     public void makeMove(Move moveToPlay){
         if(validMove(moveToPlay)){
-            int firstEmptySlotInColumn = findFirstEmptySlot(moveToPlay)
-            int column = moveToPlay.getColPosition()
+            int firstEmptySlotInColumn = findFirstEmptySlot(moveToPlay);
+            int column = moveToPlay.getColPosition();
             boardRepresentation[firstEmptySlotInColumn][column] = moveToPlay.getMoveColor();
-            assignPositionToLastMoveFields(firstEmptySlotInColumn, colum);
+            assignPositionToLastMoveFields(firstEmptySlotInColumn, column);
+            assignColorToLastMoveField(moveToPlay.getMoveColor());
         }
     }
     
-    private void assignPositionToLastMoveFileds(int column, int row){
+    private void assignPositionToLastMoveFields(int column, int row){
         lastMoveColumn = column;
         lastMoveRow = row;
+    }
+    
+    private void assignColorToLastMoveField(BoardSlot lastMoveColor){
+        this.lastMoveColor = lastMoveColor;
     }
     
     private boolean validMove(Move moveToValidate){
@@ -91,7 +125,7 @@ public class Board{
     
     private boolean moveInBoard(Move moveToValidate){
         int colPos = moveToValidate.getColPosition(); 
-        return colPos >= 0 && colPos < rowLength + 1;
+        return colPos >= 0 && colPos < rowLength;
     }
     
     private boolean moveIsEmpty(Move moveToValidate){
