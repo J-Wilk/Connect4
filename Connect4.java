@@ -18,7 +18,7 @@ class Connect4{
             goNumber++;
         }
         gameBoard.displayBoard();
-        System.out.println("winner");
+        printWinnerMessage();
     
     }
     
@@ -28,5 +28,15 @@ class Connect4{
         }else{
             return BoardSlot.YELLOW;
         }
+    }
+    
+    private void printWinnerMessage(){
+        String winningPlayersColor;
+        if(getCurrentPlayerColor() == BoardSlot.RED){
+            winningPlayersColor = "yellow";    
+        } else {
+            winningPlayersColor = "red";
+        }
+        System.out.println("Congratulations " + winningPlayersColor + " player, you won!");
     }
 }
