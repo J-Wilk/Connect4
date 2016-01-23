@@ -81,7 +81,17 @@ public class Board{
     }
     
     private boolean verticleWin(){
-        return false;
+        int count = 0;
+        int position = lastMoveColumn;
+        while(inRowBoundary(position)){
+            if(boardRepresentation[position][lastMoveRow] == lastMoveColor){
+                count++;
+            } else {
+                break;
+            }
+            position++;
+        }
+        return count >= 4;
     }
     
     private boolean diagonalWin(){
@@ -90,6 +100,10 @@ public class Board{
     
     private boolean inColumnBoundary(int columnPosition){
         return columnPosition > -1 && columnPosition < rowLength-1;
+    }
+    
+    private boolean inRowBoundary(int rowPosition){
+        return rowPosition > -1 && rowPosition < columnLength;
     }
     
     public void makeMove(Move moveToPlay){
