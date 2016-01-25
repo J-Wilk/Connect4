@@ -95,7 +95,61 @@ public class Board{
     }
     
     private boolean diagonalWin(){
-        return false;
+        return checkForLeftRightDiagnolWin() || checkForRightLeftDiagnolWin();
+    }
+    
+    private boolean checkForLeftRightDiagnolWin(){
+        int count = 0;
+        int lastMoveRowPosition = lastMoveRow;
+        int lastMoveColPosition = lastMoveColumn;
+        while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
+            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+                count++;
+            } else {
+                break;
+            }
+            lastMoveRowPosition--;
+            lastMoveColPosition--;
+        }
+        lastMoveRowPosition = lastMoveRow + 1;
+        lastMoveColPosition = lastMoveColumn + 1;
+        while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
+            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+                count++;
+            } else {
+                break;
+            }
+            lastMoveRowPosition++;
+            lastMoveColPosition++;
+        } 
+        return count >= 4;
+    }
+    
+    private boolean checkForRightLeftDiagnolWin(){
+        int count = 0;
+        int lastMoveRowPosition = lastMoveRow;
+        int lastMoveColPosition = lastMoveColumn;
+        while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
+            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+                count++;
+            } else {
+                break;
+            }
+            lastMoveRowPosition--;
+            lastMoveColPosition++;
+        }
+        lastMoveRowPosition = lastMoveRow + 1;
+        lastMoveColPosition = lastMoveColumn + 1;
+        while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
+            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+                count++;
+            } else {
+                break;
+            }
+            lastMoveRowPosition--;
+            lastMoveColPosition++;
+        } 
+        return count >= 4;
     }
     
     private boolean inColumnBoundary(int columnPosition){
