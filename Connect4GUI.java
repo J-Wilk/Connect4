@@ -12,6 +12,9 @@ class Connect4GUI{
         String title  = "Connect 4 Game";
         mainWindow = new JFrame(title);
         Container contentPane = mainWindow.getContentPane();
+        Move testMove = new Move(3);
+        testMove.setMoveColor(BoardSlot.RED);
+        gameBoard.makeMove(testMove);
         contentPane.add(createMainPanel());
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.pack();
@@ -19,10 +22,10 @@ class Connect4GUI{
     }
     
     private JPanel createMainPanel(){
-        JPanel mainGamePanel = new JPanel(new GridLayout(7, 6));
-        for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 6; j++){
-                JButton button = new JButton(gameBoard.getBoardSlot(i, j));
+        JPanel mainGamePanel = new JPanel(new GridLayout(6, 7));
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 7; j++){
+                JButton button = new JButton(gameBoard.getBoardSlot(j, i));
                 mainGamePanel.add(button);
             }
         }
