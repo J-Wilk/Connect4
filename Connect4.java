@@ -6,7 +6,7 @@ class Connect4{
     
     public Connect4(){
         gameBoard = new Board();
-        Connect4GUI gui = new Connect4GUI();
+        Connect4GUI gui = new Connect4GUI(gameBoard);
         goNumber = 0;
         Scanner reader = new Scanner(System.in);
         while(gameBoard.noWinner()){

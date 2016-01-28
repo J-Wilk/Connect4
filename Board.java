@@ -210,5 +210,9 @@ public class Board{
         }
         return currentRowSlot;
     }
+    
+    public String getBoardSlot(int row, int column){
+        return boardRepresentation[column][row].toString();
+    }
 
 }
