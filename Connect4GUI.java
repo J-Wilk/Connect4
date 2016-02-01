@@ -6,6 +6,8 @@ class Connect4GUI{
     
     private JFrame mainWindow;
     private Board gameBoard; 
+    private JPanel mainGamePanel;
+    private JButton[][] buttonArray;
 
     public Connect4GUI(Board gameBoard){
         this.gameBoard = gameBoard;
@@ -15,21 +17,46 @@ class Connect4GUI{
         Move testMove = new Move(3);
         testMove.setMoveColor(BoardSlot.RED);
         gameBoard.makeMove(testMove);
+        buttonArray = new JButton[7][6];
         contentPane.add(createMainPanel());
+        
         mainWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainWindow.pack();
         mainWindow.setVisible(true);
     }
     
     private JPanel createMainPanel(){
-        JPanel mainGamePanel = new JPanel(new GridLayout(6, 7));
+        mainGamePanel = new JPanel(new GridLayout(6, 7));
         for(int i = 0; i < 6; i++){
             for(int j = 0; j < 7; j++){
                 JButton button = new JButton(gameBoard.getBoardSlot(j, i));
+                button.addActionListener(new ButtonListener(j, i));
+                buttonArray[j][i] = button;
                 mainGamePanel.add(button);
             }
-        }
+        } 
         return mainGamePanel;   
     }
+        
+    class ButtonListener implements ActionListener {
+        private int col;
+        private int row;
+        
+        public ButtonListener(int col, int row){
+            this.col = col;
+            this.row = row;
+        }
+        
+        public void actionPerformed(ActionEvent event){
+            Move newMove = new Move(col + 1);
+            newMove.setMoveColor(BoardSlot.RED);
+            gameBoard.makeMove(newMove);
+            gameBoard.displayBoard();
+            buttonArray[col][row].setText(gameBoard.getBoardSlot(col, row));
+            mainGamePanel.revalidate();
+            mainGamePanel.repaint();       
+        }
+    } 
 
 }
+
