@@ -16,7 +16,7 @@ public class Board{
         initalizeGameBoardToEmpty();
     }
     
-    private void initalizeGameBoardToEmpty(){
+    public void initalizeGameBoardToEmpty(){
         for(int i = 0; i < columnLength; i++){
             for(int j = 0; j < rowLength; j++){
                 boardRepresentation[i][j] = BoardSlot.EMPTY;

@@ -14,9 +14,6 @@ class Connect4GUI{
         String title  = "Connect 4 Game";
         mainWindow = new JFrame(title);
         Container contentPane = mainWindow.getContentPane();
-        Move testMove = new Move(3);
-        testMove.setMoveColor(BoardSlot.RED);
-        gameBoard.makeMove(testMove);
         buttonArray = new JButton[7][6];
         contentPane.add(createMainPanel());
         
@@ -53,8 +50,15 @@ class Connect4GUI{
             gameBoard.makeMove(newMove);
             gameBoard.displayBoard();
             buttonArray[col][row].setText(gameBoard.getBoardSlot(col, row));
+            if(!gameBoard.noWinner()){
+                JOptionPane.showMessageDialog(null, "Winner winner chicken dinner");
+                gameBoard.initalizeGameBoardToEmpty();
+                mainWindow.remove(mainGamePanel);
+                mainWindow.add(createMainPanel());
+                mainWindow.pack();
+            } 
             mainGamePanel.revalidate();
-            mainGamePanel.repaint();       
+            mainGamePanel.repaint();    
         }
     } 
 
