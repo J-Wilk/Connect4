@@ -7,11 +7,13 @@ public class Board{
     private int columnLength;
     private int lastMoveColumn;
     private int lastMoveRow;
+    private int goNumber;
     private BoardSlot lastMoveColor;
     
     public Board(){
         rowLength = 7;
         columnLength = 6;
+        goNumber = 0;
         boardRepresentation = new BoardSlot[columnLength][rowLength];
         initalizeGameBoardToEmpty();
     }
@@ -167,6 +169,7 @@ public class Board{
             boardRepresentation[firstEmptySlotInColumn][column] = moveToPlay.getMoveColor();
             assignPositionToLastMoveFields(firstEmptySlotInColumn, column);
             assignColorToLastMoveField(moveToPlay.getMoveColor());
+            goNumber++;
         }
     }
     
@@ -213,6 +216,14 @@ public class Board{
     
     public String getBoardSlot(int row, int column){
         return boardRepresentation[column][row].toString();
+    }
+    
+    public int getGoNumber(){
+        return goNumber;
+    }
+    
+    public void setGoNumber(int newGoNumber){
+        goNumber = newGoNumber;
     }
 
 }

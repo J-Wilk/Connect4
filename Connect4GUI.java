@@ -46,19 +46,33 @@ class Connect4GUI{
         
         public void actionPerformed(ActionEvent event){
             Move newMove = new Move(col + 1);
-            newMove.setMoveColor(BoardSlot.RED);
+            if(gameBoard.getGoNumber() % 2 == 0){
+                newMove.setMoveColor(BoardSlot.RED);    
+            } else {
+                newMove.setMoveColor(BoardSlot.YELLOW);
+            }
             gameBoard.makeMove(newMove);
             gameBoard.displayBoard();
-            buttonArray[col][row].setText(gameBoard.getBoardSlot(col, row));
+            updateColumn(col);
             if(!gameBoard.noWinner()){
                 JOptionPane.showMessageDialog(null, "Winner winner chicken dinner");
                 gameBoard.initalizeGameBoardToEmpty();
+                gameBoard.setGoNumber(0);
                 mainWindow.remove(mainGamePanel);
                 mainWindow.add(createMainPanel());
                 mainWindow.pack();
             } 
             mainGamePanel.revalidate();
             mainGamePanel.repaint();    
+        }
+        
+        private void updateColumn(int col){
+            for(int i = 5; i > 0; i--){
+                System.out.println("col: " + col + " Row: " + i);
+                buttonArray[col][i].setText(gameBoard.getBoardSlot(col, i));
+                System.out.println(buttonArray[col][i].getText());
+            }
+            
         }
     } 
 
