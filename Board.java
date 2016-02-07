@@ -3,24 +3,24 @@ import java.util.*;
 public class Board{
     
     private BoardSlot[][] boardRepresentation;
-    private int rowLength;
-    private int columnLength;
+    private int noOfRows;
+    private int noOfCols;
     private int lastMoveColumn;
     private int lastMoveRow;
     private int goNumber;
     private BoardSlot lastMoveColor;
     
     public Board(){
-        rowLength = 7;
-        columnLength = 6;
+        noOfRows = 6;
+        noOfCols = 7;
         goNumber = 0;
-        boardRepresentation = new BoardSlot[columnLength][rowLength];
+        boardRepresentation = new BoardSlot[noOfRows][noOfCols];
         initalizeGameBoardToEmpty();
     }
     
     public void initalizeGameBoardToEmpty(){
-        for(int i = 0; i < columnLength; i++){
-            for(int j = 0; j < rowLength; j++){
+        for(int i = 0; i < noOfRows; i++){
+            for(int j = 0; j < noOfCols; j++){
                 boardRepresentation[i][j] = BoardSlot.EMPTY;
             }
         }
@@ -28,8 +28,8 @@ public class Board{
     
     public void displayBoard(){
         printNumbers();
-        for(int i = 0; i < columnLength; i++){
-            for(int j = 0; j < rowLength; j++){
+        for(int i = 0; i < noOfRows; i++){
+            for(int j = 0; j < noOfCols; j++){
                 printBoardSlot(i, j);
             }
             System.out.println("|");
@@ -38,7 +38,7 @@ public class Board{
     }
     
     private void printNumbers(){
-        for(int i = 1; i < rowLength + 1; i++){
+        for(int i = 1; i < noOfCols + 1; i++){
             System.out.print(" " + i);
         }
         System.out.println();
@@ -47,8 +47,6 @@ public class Board{
     public void printBoardSlot(int row, int column){
         System.out.print("|" + boardRepresentation[row][column]);
     }
-    
-    // winning move
     
     public boolean noWinner(){
         if(horizontalWin() || verticleWin() || diagonalWin()){
@@ -59,9 +57,9 @@ public class Board{
     
     private boolean horizontalWin(){
         int count = 0;
-        int position = lastMoveRow;
+        int position = lastMoveColumn;
         while(inColumnBoundary(position)){
-            if(boardRepresentation[lastMoveColumn][position] == lastMoveColor)
+            if(boardRepresentation[lastMoveRow][position] == lastMoveColor)
             {
                 count++;
             } else {
@@ -69,9 +67,9 @@ public class Board{
             }
             position++;
         }
-        position = lastMoveRow - 1;
+        position = lastMoveColumn - 1;
         while(inColumnBoundary(position)){
-            if(boardRepresentation[lastMoveColumn][position] == lastMoveColor)
+            if(boardRepresentation[lastMoveRow][position] == lastMoveColor)
             {
                 count++;
             } else {
@@ -84,15 +82,16 @@ public class Board{
     
     private boolean verticleWin(){
         int count = 0;
-        int position = lastMoveColumn;
+        int position = lastMoveRow;
         while(inRowBoundary(position)){
-            if(boardRepresentation[position][lastMoveRow] == lastMoveColor){
+            if(boardRepresentation[position][lastMoveColumn] == lastMoveColor){
                 count++;
             } else {
                 break;
             }
             position++;
         }
+        System.out.println("count: " + count);
         return count >= 4;
     }
     
@@ -105,7 +104,7 @@ public class Board{
         int lastMoveRowPosition = lastMoveRow;
         int lastMoveColPosition = lastMoveColumn;
         while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
-            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+            if(boardRepresentation[lastMoveRowPosition][lastMoveColPosition] == lastMoveColor){
                 count++;
             } else {
                 break;
@@ -116,14 +115,14 @@ public class Board{
         lastMoveRowPosition = lastMoveRow + 1;
         lastMoveColPosition = lastMoveColumn + 1;
         while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
-            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+            if(boardRepresentation[lastMoveRowPosition][lastMoveColPosition] == lastMoveColor){
                 count++;
             } else {
                 break;
             }
             lastMoveRowPosition++;
             lastMoveColPosition++;
-        } 
+        }
         return count >= 4;
     }
     
@@ -132,7 +131,7 @@ public class Board{
         int lastMoveRowPosition = lastMoveRow;
         int lastMoveColPosition = lastMoveColumn;
         while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
-            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+            if(boardRepresentation[lastMoveRowPosition][lastMoveColPosition] == lastMoveColor){
                 count++;
             } else {
                 break;
@@ -141,25 +140,25 @@ public class Board{
             lastMoveColPosition++;
         }
         lastMoveRowPosition = lastMoveRow + 1;
-        lastMoveColPosition = lastMoveColumn + 1;
+        lastMoveColPosition = lastMoveColumn - 1;
         while(inRowBoundary(lastMoveRowPosition) && inColumnBoundary(lastMoveColPosition)){
-            if(boardRepresentation[lastMoveColPosition][lastMoveRowPosition] == lastMoveColor){
+            if(boardRepresentation[lastMoveRowPosition][lastMoveColPosition] == lastMoveColor){
                 count++;
             } else {
                 break;
             }
-            lastMoveRowPosition--;
-            lastMoveColPosition++;
-        } 
+            lastMoveRowPosition++;
+            lastMoveColPosition--;
+        }
         return count >= 4;
     }
     
     private boolean inColumnBoundary(int columnPosition){
-        return columnPosition > -1 && columnPosition < rowLength-1;
+        return columnPosition > -1 && columnPosition < noOfCols;
     }
     
     private boolean inRowBoundary(int rowPosition){
-        return rowPosition > -1 && rowPosition < columnLength;
+        return rowPosition > -1 && rowPosition < noOfRows;
     }
     
     public void makeMove(Move moveToPlay){
@@ -173,7 +172,7 @@ public class Board{
         }
     }
     
-    private void assignPositionToLastMoveFields(int column, int row){
+    private void assignPositionToLastMoveFields(int row, int column){
         lastMoveColumn = column;
         lastMoveRow = row;
     }
@@ -193,7 +192,7 @@ public class Board{
     
     private boolean moveInBoard(Move moveToValidate){
         int colPos = moveToValidate.getColPosition(); 
-        return colPos >= 0 && colPos < rowLength;
+        return colPos >= 0 && colPos < noOfCols;
     }
     
     private boolean moveIsEmpty(Move moveToValidate){
@@ -203,7 +202,7 @@ public class Board{
     
     private int findFirstEmptySlot(Move moveToFindEmptySlotFor){
         boolean spaceFound = false;
-        int currentRowSlot = columnLength - 1;
+        int currentRowSlot = noOfRows - 1;
         while(!spaceFound && currentRowSlot > 0){
             if(boardRepresentation[currentRowSlot][moveToFindEmptySlotFor.getColPosition()] == BoardSlot.EMPTY){
                 spaceFound = true;  

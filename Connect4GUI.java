@@ -46,16 +46,12 @@ class Connect4GUI{
         
         public void actionPerformed(ActionEvent event){
             Move newMove = new Move(col + 1);
-            if(gameBoard.getGoNumber() % 2 == 0){
-                newMove.setMoveColor(BoardSlot.RED);    
-            } else {
-                newMove.setMoveColor(BoardSlot.YELLOW);
-            }
+            newMove.setMoveColor(getCurrentPlayerColor());
             gameBoard.makeMove(newMove);
             gameBoard.displayBoard();
             updateColumn(col);
             if(!gameBoard.noWinner()){
-                JOptionPane.showMessageDialog(null, "Winner winner chicken dinner");
+                JOptionPane.showMessageDialog(null, "Well done " + getWinningPlayerColor() + " player you won!");
                 gameBoard.initalizeGameBoardToEmpty();
                 gameBoard.setGoNumber(0);
                 mainWindow.remove(mainGamePanel);
@@ -67,12 +63,26 @@ class Connect4GUI{
         }
         
         private void updateColumn(int col){
-            for(int i = 5; i > 0; i--){
-                System.out.println("col: " + col + " Row: " + i);
+            for(int i = 5; i > -1; i--){
                 buttonArray[col][i].setText(gameBoard.getBoardSlot(col, i));
-                System.out.println(buttonArray[col][i].getText());
             }
             
+        }
+        
+        private BoardSlot getCurrentPlayerColor(){
+            if(gameBoard.getGoNumber() % 2 == 0){
+                return BoardSlot.RED;    
+            } else {
+                return BoardSlot.YELLOW;
+            }
+        }
+        
+        private String getWinningPlayerColor(){
+            if(getCurrentPlayerColor() == BoardSlot.YELLOW){
+                return "Red";
+            } else {
+                return "Yellow";
+            }
         }
     } 
 
